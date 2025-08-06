@@ -1,146 +1,140 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Diolopaje - Taller de impresión textil</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Diolopaje - Pedidos Personalizados</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <div class="logo-container">
-    <img src="logo.png" alt="Logo Diolopaje" class="logo">
-  </div>
+  <header>
+    <img src="logo.png" alt="Logo Diolopaje" class="logo" />
+    <h1>DIolopaje</h1>
+    <p>Diseña a tu gusto. Nos pondremos en contacto contigo antes de realizar el pedido.</p>
+  </header>
 
-  <h1>Diolopaje - Taller de impresión textil</h1>
-  <p class="intro">
-    ¡Dale vida a tus prendas con nosotros! Estamos en Fisterra, A Coruña.  
-    Especialistas en personalización textil para trabajos, grupos y eventos ✨
-  </p>
+  <main>
+    <form action="https://formsubmit.co/diolopajefisterra@gmail.com" method="POST">
+      <!-- OCULTAR CAPTCHA Y REDIRECCIÓN -->
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://diolopaje.github.io/Diolopaje/gracias.html">
 
-  <form id="pedidoForm" action="https://formsubmit.co/hugo.baldomar15@gmail.com" method="POST">
-    <!-- CONFIG HIDDEN -->
-    <input type="hidden" name="_subject" value="Nuevo pedido desde la web">
-    <input type="hidden" name="_template" value="table">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_next" value="https://diolopaje.com/gracias.html">
-
-    <fieldset>
-      <legend>🧢 Tipo de prenda</legend>
-
+      <!-- Tipo de prenda -->
       <label for="tipoPrenda">Tipo de prenda:</label>
-      <select id="tipoPrenda" name="tipoPrenda">
-        <option value="algodon">Camiseta de algodón (Stafford, Beagle, Bronx)</option>
+      <select id="tipoPrenda" name="tipoPrenda" required>
+        <option value="" disabled selected>Selecciona una opción</option>
+        <option value="camiseta_algodon">Camiseta de algodón</option>
+        <option value="sudadera">Sudadera</option>
+        <option value="gorra">Gorra</option>
+        <option value="espinilleras">Espinilleras</option>
       </select>
 
-      <label for="modelo">Modelo de camiseta:</label>
-      <select id="modelo" name="modelo" onchange="actualizarTecnicas()">
-        <option value="stafford">Stafford - 19,50 € (DTF) o 24,00 € (impresión directa)</option>
-        <option value="beagle">Beagle - 15,00 € (solo DTF)</option>
-        <option value="bronx">Bronx - 22,00 € (DTF) o 28,00 € (impresión directa)</option>
-      </select>
-
-      <div id="tecnicaContainer">
-        <label for="tecnica">Técnica:</label>
-        <select id="tecnica" name="tecnica">
-          <option value="DTF">DTF</option>
-          <option value="impresion_directa">Impresión directa</option>
+      <!-- Modelo de camiseta (solo si se selecciona camiseta) -->
+      <div id="camisetaModelos" style="display:none;">
+        <label for="modelo">Modelo:</label>
+        <select id="modelo" name="modelo">
+          <option value="" disabled selected>Selecciona modelo</option>
+          <option value="stafford">Stafford</option>
+          <option value="beagle">Beagle</option>
+          <option value="bronx">Bronx</option>
         </select>
       </div>
-    </fieldset>
 
-    <div id="infoTecnica">
-      <p><strong>ℹ️ Información importante sobre camisetas</strong></p>
-      <ul>
-        <li><strong>Marcaje:</strong> incluye 2 zonas: pechera (10×10 cm) y zona central (25×25 cm)</li>
-        <li><strong>Zona adicional:</strong> +3 € por unidad</li>
-        <li>Diseños modificables se presupuestan aparte</li>
-        <li><strong>Descuentos:</strong> 10% (15-50), 15% (51-100), consultar si >100</li>
-        <li><strong>Diseño hecho por nosotros:</strong> +5 €</li>
-      </ul>
-    </div>
-
-    <fieldset>
-      <legend>📅 Cantidad por talla y género</legend>
-      <table>
-        <thead>
-          <tr><th></th><th>XS</th><th>S</th><th>M</th><th>L</th><th>XL</th><th>XXL</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Chico</td>
-            <td><input name="chico_xs" class="cantidad" type="number" min="0" value="0" data-genero="chico" data-talla="XS"></td>
-            <td><input name="chico_s" class="cantidad" type="number" min="0" value="0" data-genero="chico" data-talla="S"></td>
-            <td><input name="chico_m" class="cantidad" type="number" min="0" value="0" data-genero="chico" data-talla="M"></td>
-            <td><input name="chico_l" class="cantidad" type="number" min="0" value="0" data-genero="chico" data-talla="L"></td>
-            <td><input name="chico_xl" class="cantidad" type="number" min="0" value="0" data-genero="chico" data-talla="XL"></td>
-            <td><input name="chico_xxl" class="cantidad" type="number" min="0" value="0" data-genero="chico" data-talla="XXL"></td>
-          </tr>
-          <tr><td>Chica</td>
-            <td><input name="chica_xs" class="cantidad" type="number" min="0" value="0" data-genero="chica" data-talla="XS"></td>
-            <td><input name="chica_s" class="cantidad" type="number" min="0" value="0" data-genero="chica" data-talla="S"></td>
-            <td><input name="chica_m" class="cantidad" type="number" min="0" value="0" data-genero="chica" data-talla="M"></td>
-            <td><input name="chica_l" class="cantidad" type="number" min="0" value="0" data-genero="chica" data-talla="L"></td>
-            <td><input name="chica_xl" class="cantidad" type="number" min="0" value="0" data-genero="chica" data-talla="XL"></td>
-            <td><input name="chica_xxl" class="cantidad" type="number" min="0" value="0" data-genero="chica" data-talla="XXL"></td>
-          </tr>
-          <tr><td>Niño/a</td>
-            <td><input name="niño_xs" class="cantidad" type="number" min="0" value="0" data-genero="niño" data-talla="XS"></td>
-            <td><input name="niño_s" class="cantidad" type="number" min="0" value="0" data-genero="niño" data-talla="S"></td>
-            <td><input name="niño_m" class="cantidad" type="number" min="0" value="0" data-genero="niño" data-talla="M"></td>
-            <td><input name="niño_l" class="cantidad" type="number" min="0" value="0" data-genero="niño" data-talla="L"></td>
-            <td><input name="niño_xl" class="cantidad" type="number" min="0" value="0" data-genero="niño" data-talla="XL"></td>
-            <td><input name="niño_xxl" class="cantidad" type="number" min="0" value="0" data-genero="niño" data-talla="XXL"></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <label for="extras">¿Cuántas zonas extra (además de las 2 incluidas)?</label>
-      <input type="number" id="extras" name="zonas_extra" min="0" value="0">
-
-      <label for="color">Color deseado:</label>
-      <input type="text" id="color" name="color" placeholder="Ej: rojo, azul, negro...">
-
-      <p id="precioEstimado"><strong>Precio estimado:</strong> 0 € (con descuentos)</p>
-    </fieldset>
-
-    <fieldset>
-      <legend>🎨 Personalización</legend>
-
-      <label for="todasIguales">¿Todas las camisetas serán iguales?</label>
-      <select id="todasIguales" name="todas_iguales">
-        <option>Sí, todas iguales</option>
-        <option>No, quiero personalizarlas individualmente</option>
+      <!-- Técnica de impresión -->
+      <label for="tecnica">Técnica de impresión:</label>
+      <select id="tecnica" name="tecnica" required>
+        <option value="" disabled selected>Selecciona técnica</option>
+        <option value="dtf">DTF</option>
+        <option value="impresion_directa">Impresión directa</option>
       </select>
 
-      <label for="diseñoExtra">¿Quieres que hagamos nosotros el diseño? (+5 €)</label>
-      <select id="diseñoExtra" name="diseño_extra">
-        <option>No</option>
-        <option>Sí</option>
+      <!-- Cantidades por género y talla -->
+      <fieldset>
+        <legend>Cantidades por talla y género</legend>
+
+        <!-- Chico -->
+        <label>Chico</label>
+        <input type="number" name="chico_xs" placeholder="XS" min="0" />
+        <input type="number" name="chico_s" placeholder="S" min="0" />
+        <input type="number" name="chico_m" placeholder="M" min="0" />
+        <input type="number" name="chico_l" placeholder="L" min="0" />
+        <input type="number" name="chico_xl" placeholder="XL" min="0" />
+        <input type="number" name="chico_xxl" placeholder="XXL" min="0" />
+
+        <!-- Chica -->
+        <label>Chica</label>
+        <input type="number" name="chica_xs" placeholder="XS" min="0" />
+        <input type="number" name="chica_s" placeholder="S" min="0" />
+        <input type="number" name="chica_m" placeholder="M" min="0" />
+        <input type="number" name="chica_l" placeholder="L" min="0" />
+        <input type="number" name="chica_xl" placeholder="XL" min="0" />
+        <input type="number" name="chica_xxl" placeholder="XXL" min="0" />
+
+        <!-- Niño -->
+        <label>Niño/Niña</label>
+        <input type="number" name="nino_2" placeholder="2-3 años" min="0" />
+        <input type="number" name="nino_4" placeholder="4-5 años" min="0" />
+        <input type="number" name="nino_6" placeholder="6-7 años" min="0" />
+        <input type="number" name="nino_8" placeholder="8-9 años" min="0" />
+        <input type="number" name="nino_10" placeholder="10-11 años" min="0" />
+        <input type="number" name="nino_12" placeholder="12-13 años" min="0" />
+      </fieldset>
+
+      <!-- Color -->
+      <label for="color">Color de las prendas:</label>
+      <input type="text" name="color" id="color" placeholder="Ej: blanco, negro, etc." />
+
+      <!-- Todas iguales -->
+      <label for="todas_iguales">¿Todas las prendas son iguales?</label>
+      <select name="todas_iguales" id="todas_iguales">
+        <option value="Sí, todas iguales">Sí, todas iguales</option>
+        <option value="No, cada una personalizada">No, cada una personalizada</option>
       </select>
 
-      <label for="personalizacion">Especificaciones individuales:</label>
-      <textarea id="personalizacion" name="personalizacion" placeholder="Ej: Camiseta M chica con BALDO 10, otra con LUCAS 7, etc."></textarea>
-    </fieldset>
+      <!-- Diseño adicional -->
+      <label for="diseno_extra">¿Llevan un diseño adicional (+5 €)?</label>
+      <select name="diseno_extra" id="diseno_extra">
+        <option value="No">No</option>
+        <option value="Sí">Sí</option>
+      </select>
 
-    <fieldset>
-      <legend>📞 Información de contacto</legend>
+      <!-- Nombre y número -->
+      <label for="nombre_personalizado">¿Quieres añadir nombre (+3 €)?</label>
+      <select name="nombre_personalizado">
+        <option value="No">No</option>
+        <option value="Sí">Sí</option>
+      </select>
 
-      <label for="nombre">Nombre y apellidos:</label>
-      <input type="text" id="nombre" name="nombre" required>
+      <label for="numero_personalizado">¿Quieres añadir número (+3 €)?</label>
+      <select name="numero_personalizado">
+        <option value="No">No</option>
+        <option value="Sí">Sí</option>
+      </select>
 
-      <label for="correo">Correo electrónico:</label>
-      <input type="email" id="correo" name="_replyto" required>
+      <!-- Personalización de las prendas -->
+      <label for="personalizacion">Especifica qué debe poner (frase, número, dibujo…):</label>
+      <textarea name="personalizacion" id="personalizacion" rows="3" placeholder="Ej: Pizza Team, número 10, etc."></textarea>
 
-      <label for="telefono">Teléfono móvil:</label>
-      <input type="tel" id="telefono" name="telefono" required>
+      <!-- Email -->
+      <label for="email">Tu correo electrónico:</label>
+      <input type="email" name="email" id="email" required />
 
+      <!-- Nombre -->
+      <label for="nombre">Tu nombre:</label>
+      <input type="text" name="nombre" id="nombre" required />
+
+      <!-- Teléfono -->
+      <label for="telefono">Teléfono de contacto:</label>
+      <input type="tel" name="telefono" id="telefono" required />
+
+      <!-- Botón -->
       <button type="submit">Enviar pedido</button>
+    </form>
+  </main>
 
-      <p class="contacto">
-        📍 Diolopaje - Taller de impresión textil en Fisterra, A Coruña<br>
-        📧 <a href="mailto:hugo.baldomar15@gmail.com">diolopajefisterra@gmail.com</a><br>
-        📱 600208408
-      </p>
-    </fieldset>
-  </form>
+  <footer>
+    <p>© 2025 Diolopaje · Fisterra, A Coruña · Contacto: diolopajefisterra@gmail.com</p>
+  </footer>
 </body>
 </html>
