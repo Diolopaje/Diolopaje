@@ -1,0 +1,124 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    line-height: 1.6;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #111;
+}
+
+h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-top: 0;
+}
+
+.intro {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.logo {
+    max-width: 200px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+form {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+fieldset {
+    border: none;
+    border-top: 2px solid #ccc;
+    padding: 20px 0;
+}
+
+legend {
+    font-weight: bold;
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+textarea {
+    height: 80px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    text-align: center;
+}
+
+th, td {
+    padding: 8px;
+}
+
+button {
+    background-color: #222;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #444;
+}
+
+.explicacion-dtf {
+    font-size: 14px;
+    color: #3333cc;
+    margin-top: 10px;
+}
+
+#precioEstimado {
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.contacto {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.contacto a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.contacto a:hover {
+    text-decoration: underline;
+}
