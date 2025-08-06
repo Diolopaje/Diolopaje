@@ -1,55 +1,52 @@
-document.addEventListener("DOMContentLoaded", () => {
-    actualizarTecnicas();
-    document.querySelectorAll(".cantidad, #modelo, #tecnica, #extras, #diseñoExtra").forEach(el => {
-        el.addEventListener("input", calcularPrecio);
-    });
-});
+const modelo = document.getElementById("modelo");
+const tecnica = document.getElementById("tecnica");
+const tecnicaContainer = document.getElementById("tecnicaContainer");
+const cantidades = document.querySelectorAll(".cantidad");
+const zonasExtra = document.getElementById("zonas_extra");
+const disenoExtra = document.getElementById("diseño_extra");
+const precioEstimado = document.getElementById("precioEstimado");
+const precioFinalInput = document.getElementById("precioFinal");
 
 function actualizarTecnicas() {
-    const modelo = document.getElementById("modelo").value;
-    const tecnicaSelect = document.getElementById("tecnica");
-
-    tecnicaSelect.innerHTML = ""; // Limpiar opciones
-    if (modelo === "beagle") {
-        tecnicaSelect.innerHTML = `<option value="DTF">DTF</option>`;
-    } else {
-        tecnicaSelect.innerHTML = `
-            <option value="DTF">DTF</option>
-            <option value="impresion_directa">Impresión directa</option>
-        `;
-    }
-
-    calcularPrecio();
+  const modeloSeleccionado = modelo.value;
+  if (modeloSeleccionado === "beagle") {
+    tecnica.value = "DTF";
+    tecnica.disabled = true;
+  } else {
+    tecnica.disabled = false;
+  }
+  calcularPrecio();
 }
 
 function calcularPrecio() {
-    const modelo = document.getElementById("modelo").value;
-    const tecnica = document.getElementById("tecnica").value;
-    const diseñoExtra = document.getElementById("diseñoExtra").value;
-    const zonasExtra = parseInt(document.getElementById("extras").value) || 0;
+  const precios = {
+    stafford: { DTF: 19.5, impresion_directa: 24 },
+    beagle: { DTF: 15 },
+    bronx: { DTF: 22, impresion_directa: 28 }
+  };
 
-    // Precios base por modelo y técnica
-    let precioBase = 0;
-    if (modelo === "stafford") {
-        precioBase = (tecnica === "DTF") ? 19.5 : 24.0;
-    } else if (modelo === "beagle") {
-        precioBase = 15.0;
-    } else if (modelo === "bronx") {
-        precioBase = (tecnica === "DTF") ? 22.0 : 28.0;
-    }
+  const cantidadesTotal = [...cantidades].reduce((acc, input) => acc + parseInt(input.value || 0), 0);
+  const zonas = parseInt(zonasExtra.value || 0);
+  const quiereDisenoExtra = disenoExtra.value === "Sí";
+  const precioBase = precios[modelo.value][tecnica.value] || 0;
 
-    let totalUnidades = 0;
-    document.querySelectorAll(".cantidad").forEach(input => {
-        totalUnidades += parseInt(input.value) || 0;
-    });
+  let precioUnitario = precioBase;
+  if (cantidadesTotal >= 15 && cantidadesTotal <= 50) {
+    precioUnitario *= 0.9;
+  } else if (cantidadesTotal > 50 && cantidadesTotal <= 100) {
+    precioUnitario *= 0.85;
+  }
 
-    let total = totalUnidades * precioBase;
-    total += zonasExtra * 3 * totalUnidades;
-    if (diseñoExtra === "Sí") total += 5;
+  let total = precioUnitario * cantidadesTotal;
+  total += zonas * 3;
+  if (quiereDisenoExtra) total += 5;
 
-    // Descuentos por cantidad
-    if (totalUnidades >= 15 && totalUnidades <= 50) total *= 0.90;
-    else if (totalUnidades > 50 && totalUnidades <= 100) total *= 0.85;
-
-    document.getElementById("precioEstimado").textContent = `Precio estimado: ${total.toFixed(2)} € (con descuentos)`;
+  precioEstimado.innerHTML = `<strong>Precio estimado:</strong> ${total.toFixed(2)} € (con descuentos)`;
+  precioFinalInput.value = `${total.toFixed(2)} €`;
 }
+
+document.querySelectorAll("input, select").forEach(el => {
+  el.addEventListener("input", calcularPrecio);
+});
+
+actualizarTecnicas();
